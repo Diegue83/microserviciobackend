@@ -1,0 +1,364 @@
+Started by user Diego
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/lib/docker/volumes/jenkins_home/_data/workspace/MicroservicioBack
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Tool Install)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Checkout)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] git
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/lib/docker/volumes/jenkins_home/_data/workspace/MicroservicioBack/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/Diegue83/microserviciobackend.git # timeout=10
+Fetching upstream changes from https://github.com/Diegue83/microserviciobackend.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --tags --force --progress -- https://github.com/Diegue83/microserviciobackend.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 6ec50c0c9d6a6e4f484709cb330aa09e761f22ca (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 6ec50c0c9d6a6e4f484709cb330aa09e761f22ca # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git branch -D main # timeout=10
+ > git checkout -b main 6ec50c0c9d6a6e4f484709cb330aa09e761f22ca # timeout=10
+Commit message: "Atención de incidencias de SonarQube"
+ > git rev-list --no-walk 9354efae1409956ec8e85304cd0139e53d15224d # timeout=10
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Ver Directorio)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
++ ls -la
+total 72
+drwxr-xr-x  8 jenkins jenkins  4096 Nov  5 16:59 .
+drwxr-xr-x  8 jenkins jenkins  4096 Nov  5 17:25 ..
+drwxr-xr-x  8 jenkins jenkins  4096 Nov  5 17:45 .git
+-rw-r--r--  1 jenkins jenkins    37 Nov  5 15:55 .gitattributes
+-rw-r--r--  1 jenkins jenkins    81 Nov  5 15:55 .gitignore
+drwxr-xr-x  3 jenkins jenkins  4096 Nov  5 15:55 .mvn
+-rw-r--r--  1 jenkins jenkins  1063 Nov  5 15:55 HELP.md
+-rw-r--r--  1 jenkins jenkins  2426 Nov  5 15:55 Jenkinsfile
+drwxr-xr-x  2 jenkins jenkins  4096 Nov  5 15:55 db
+-rw-r--r--  1 jenkins jenkins 11290 Nov  5 15:55 mvnw
+-rw-r--r--  1 jenkins jenkins  7797 Nov  5 15:55 mvnw.cmd
+-rw-r--r--  1 jenkins jenkins  3003 Nov  5 15:55 pom.xml
+drwxr-xr-x  2 jenkins jenkins  4096 Nov  5 16:06 reportes
+drwxr-xr-x  4 jenkins jenkins  4096 Nov  5 15:55 src
+drwxr-xr-x 11 jenkins jenkins  4096 Nov  5 16:59 target
+[Pipeline] sh
++ java -version
+openjdk version "21.0.13" 2026-10-20 LTS
+OpenJDK Runtime Environment Temurin-21.0.13+9 (build 21.0.13+9-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.13+9 (build 21.0.13+9-LTS, mixed mode)
+[Pipeline] sh
++ bash /var/lib/docker/volumes/jenkins_home/_data/tools/hudson.tasks.Maven_MavenInstallation/Maven_3.9.0/bin/mvn -version
+Apache Maven 3.9.0 (9b58d2bad23a66be161c4664ef21ce219c2c8584)
+Maven home: /var/lib/docker/volumes/jenkins_home/_data/tools/hudson.tasks.Maven_MavenInstallation/Maven_3.9.0
+Java version: 21.0.13, vendor: Eclipse Adoptium, runtime: /opt/java/openjdk
+Default locale: en, platform encoding: UTF-8
+OS name: "linux", version: "5.15.153.1-microsoft-standard-wsl2", arch: "amd64", family: "unix"
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build & Test)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
++ bash /var/lib/docker/volumes/jenkins_home/_data/tools/hudson.tasks.Maven_MavenInstallation/Maven_3.9.0/bin/mvn clean package -Dsurefire.useFile=false
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -----------------< com.mx.cbtis:Ejercicio5MyAPIGestor >-----------------
+[INFO] Building Ejercicio5MyAPIGestor 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.4.1:clean (default-clean) @ Ejercicio5MyAPIGestor ---
+[INFO] Deleting /var/lib/docker/volumes/jenkins_home/_data/workspace/MicroservicioBack/target
+[INFO] 
+[INFO] --- jacoco:0.8.13:prepare-agent (prepare-agent) @ Ejercicio5MyAPIGestor ---
+[INFO] argLine set to -javaagent:/var/jenkins_home/.m2/repository/org/jacoco/org.jacoco.agent/0.8.13/org.jacoco.agent-0.8.13-runtime.jar=destfile=/var/lib/docker/volumes/jenkins_home/_data/workspace/MicroservicioBack/target/jacoco.exec
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ Ejercicio5MyAPIGestor ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] Copying 0 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ Ejercicio5MyAPIGestor ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 21 source files with javac [debug parameters release 21] to target/classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ Ejercicio5MyAPIGestor ---
+[INFO] Copying 1 resource from src/test/resources to target/test-classes
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ Ejercicio5MyAPIGestor ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 9 source files with javac [debug parameters release 21] to target/test-classes
+[INFO] 
+[INFO] --- surefire:3.5.3:test (default-test) @ Ejercicio5MyAPIGestor ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.mx.cbtis.gestor.dto.DtoTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 6.659 s -- in com.mx.cbtis.gestor.dto.DtoTest
+[INFO] Running com.mx.cbtis.gestor.Ejercicio5MyApiGestorApplicationTests
+17:46:54.851 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.mx.cbtis.gestor.Ejercicio5MyApiGestorApplicationTests]: Ejercicio5MyApiGestorApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+17:46:56.065 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.mx.cbtis.gestor.Ejercicio5MyApiGestorApplication for test class com.mx.cbtis.gestor.Ejercicio5MyApiGestorApplicationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.16)
+
+2026-11-05T17:48:02.101Z  INFO 6670 --- [           main] .g.Ejercicio5MyApiGestorApplicationTests : Starting Ejercicio5MyApiGestorApplicationTests using Java 21.0.13 with PID 6670 (started by jenkins in /var/lib/docker/volumes/jenkins_home/_data/workspace/MicroservicioBack)
+2026-11-05T17:48:02.288Z  INFO 6670 --- [           main] .g.Ejercicio5MyApiGestorApplicationTests : No active profile set, falling back to 1 default profile: "default"
+2026-11-05T18:10:49.790Z  INFO 6670 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-11-05T18:10:51.033Z  INFO 6670 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 865 ms. Found 5 JPA repository interfaces.
+2026-11-05T18:10:57.146Z  INFO 6670 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-11-05T18:10:57.957Z  INFO 6670 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.53.Final
+2026-11-05T18:10:58.570Z  INFO 6670 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-11-05T18:11:03.116Z  INFO 6670 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-11-05T18:11:03.365Z  INFO 6670 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-05T18:11:07.848Z  INFO 6670 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:dbgestor user=SA
+2026-11-05T18:11:07.853Z  INFO 6670 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-05T18:11:08.943Z  INFO 6670 --- [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-11-05T18:11:11.771Z  WARN 6670 --- [           main] org.hibernate.orm.incubating             : HHH90006001: Encountered incubating setting [hibernate.id.db_structure_naming_strategy].  See javadoc on corresponding `org.hibernate.cfg.AvailableSettings` constant for details.
+2026-11-05T18:11:11.878Z  WARN 6670 --- [           main] org.hibernate.orm.incubating             : HHH90006001: Encountered incubating setting [hibernate.id.db_structure_naming_strategy].  See javadoc on corresponding `org.hibernate.cfg.AvailableSettings` constant for details.
+2026-11-05T18:11:11.879Z  WARN 6670 --- [           main] org.hibernate.orm.incubating             : HHH90006001: Encountered incubating setting [hibernate.id.db_structure_naming_strategy].  See javadoc on corresponding `org.hibernate.cfg.AvailableSettings` constant for details.
+2026-11-05T18:11:11.879Z  WARN 6670 --- [           main] org.hibernate.orm.incubating             : HHH90006001: Encountered incubating setting [hibernate.id.db_structure_naming_strategy].  See javadoc on corresponding `org.hibernate.cfg.AvailableSettings` constant for details.
+2026-11-05T18:11:11.899Z  WARN 6670 --- [           main] org.hibernate.orm.incubating             : HHH90006001: Encountered incubating setting [hibernate.id.db_structure_naming_strategy].  See javadoc on corresponding `org.hibernate.cfg.AvailableSettings` constant for details.
+2026-11-05T18:11:24.260Z  INFO 6670 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-11-05T18:11:24.707Z  INFO 6670 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-11-05T18:11:27.275Z  INFO 6670 --- [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-11-05T18:11:29.270Z  WARN 6670 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-11-05T18:11:34.046Z  INFO 6670 --- [           main] .g.Ejercicio5MyApiGestorApplicationTests : Started Ejercicio5MyApiGestorApplicationTests in 1476.437 seconds (process running for 1512.248)
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1512 s -- in com.mx.cbtis.gestor.Ejercicio5MyApiGestorApplicationTests
+[INFO] Running com.mx.cbtis.gestor.modelo.ModelosTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.251 s -- in com.mx.cbtis.gestor.modelo.ModelosTest
+[INFO] Running com.mx.cbtis.gestor.controller.AsignacionesControllerTest
+2026-11-05T18:11:47.255Z  INFO 6670 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.mx.cbtis.gestor.controller.AsignacionesControllerTest]: AsignacionesControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-05T18:11:48.829Z  INFO 6670 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.mx.cbtis.gestor.Ejercicio5MyApiGestorApplication for test class com.mx.cbtis.gestor.controller.AsignacionesControllerTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.16)
+
+2026-11-05T18:11:50.254Z  INFO 6670 --- [           main] c.m.c.g.c.AsignacionesControllerTest     : Starting AsignacionesControllerTest using Java 21.0.13 with PID 6670 (started by jenkins in /var/lib/docker/volumes/jenkins_home/_data/workspace/MicroservicioBack)
+2026-11-05T18:11:50.289Z  INFO 6670 --- [           main] c.m.c.g.c.AsignacionesControllerTest     : No active profile set, falling back to 1 default profile: "default"
+2026-11-05T18:12:04.209Z  INFO 6670 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-11-05T18:12:04.211Z  INFO 6670 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-11-05T18:12:04.294Z  INFO 6670 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 74 ms
+2026-11-05T18:12:04.629Z  INFO 6670 --- [           main] c.m.c.g.c.AsignacionesControllerTest     : Started AsignacionesControllerTest in 15.641 seconds (process running for 1542.836)
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 27.85 s -- in com.mx.cbtis.gestor.controller.AsignacionesControllerTest
+[INFO] Running com.mx.cbtis.gestor.controller.ComentariosControllerTest
+2026-11-05T18:12:15.088Z  INFO 6670 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.mx.cbtis.gestor.controller.ComentariosControllerTest]: ComentariosControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-05T18:12:15.147Z  INFO 6670 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.mx.cbtis.gestor.Ejercicio5MyApiGestorApplication for test class com.mx.cbtis.gestor.controller.ComentariosControllerTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.16)
+
+2026-11-05T18:12:15.378Z  INFO 6670 --- [           main] c.m.c.g.c.ComentariosControllerTest      : Starting ComentariosControllerTest using Java 21.0.13 with PID 6670 (started by jenkins in /var/lib/docker/volumes/jenkins_home/_data/workspace/MicroservicioBack)
+2026-11-05T18:12:15.388Z  INFO 6670 --- [           main] c.m.c.g.c.ComentariosControllerTest      : No active profile set, falling back to 1 default profile: "default"
+2026-11-05T18:12:17.394Z  INFO 6670 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-11-05T18:12:17.395Z  INFO 6670 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-11-05T18:12:17.398Z  INFO 6670 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+2026-11-05T18:12:17.438Z  INFO 6670 --- [           main] c.m.c.g.c.ComentariosControllerTest      : Started ComentariosControllerTest in 2.259 seconds (process running for 1555.645)
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.909 s -- in com.mx.cbtis.gestor.controller.ComentariosControllerTest
+[INFO] Running com.mx.cbtis.gestor.controller.ValidacionNulosTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.337 s -- in com.mx.cbtis.gestor.controller.ValidacionNulosTest
+[INFO] Running com.mx.cbtis.gestor.controller.ProyectosControllerTest
+2026-11-05T18:12:19.339Z  INFO 6670 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.mx.cbtis.gestor.controller.ProyectosControllerTest]: ProyectosControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-05T18:12:19.403Z  INFO 6670 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.mx.cbtis.gestor.Ejercicio5MyApiGestorApplication for test class com.mx.cbtis.gestor.controller.ProyectosControllerTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.16)
+
+2026-11-05T18:12:19.624Z  INFO 6670 --- [           main] c.m.c.g.c.ProyectosControllerTest        : Starting ProyectosControllerTest using Java 21.0.13 with PID 6670 (started by jenkins in /var/lib/docker/volumes/jenkins_home/_data/workspace/MicroservicioBack)
+2026-11-05T18:12:19.624Z  INFO 6670 --- [           main] c.m.c.g.c.ProyectosControllerTest        : No active profile set, falling back to 1 default profile: "default"
+2026-11-05T18:12:20.897Z  INFO 6670 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-11-05T18:12:20.898Z  INFO 6670 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-11-05T18:12:20.900Z  INFO 6670 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2026-11-05T18:12:20.916Z  INFO 6670 --- [           main] c.m.c.g.c.ProyectosControllerTest        : Started ProyectosControllerTest in 1.449 seconds (process running for 1559.123)
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.139 s -- in com.mx.cbtis.gestor.controller.ProyectosControllerTest
+[INFO] Running com.mx.cbtis.gestor.controller.UsuarioControllerTest
+2026-11-05T18:12:21.511Z  INFO 6670 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.mx.cbtis.gestor.controller.UsuarioControllerTest]: UsuarioControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-05T18:12:21.574Z  INFO 6670 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.mx.cbtis.gestor.Ejercicio5MyApiGestorApplication for test class com.mx.cbtis.gestor.controller.UsuarioControllerTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.16)
+
+2026-11-05T18:12:21.766Z  INFO 6670 --- [           main] c.m.c.g.c.UsuarioControllerTest          : Starting UsuarioControllerTest using Java 21.0.13 with PID 6670 (started by jenkins in /var/lib/docker/volumes/jenkins_home/_data/workspace/MicroservicioBack)
+2026-11-05T18:12:21.769Z  INFO 6670 --- [           main] c.m.c.g.c.UsuarioControllerTest          : No active profile set, falling back to 1 default profile: "default"
+2026-11-05T18:12:23.381Z  INFO 6670 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-11-05T18:12:23.381Z  INFO 6670 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-11-05T18:12:23.383Z  INFO 6670 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2026-11-05T18:12:23.422Z  INFO 6670 --- [           main] c.m.c.g.c.UsuarioControllerTest          : Started UsuarioControllerTest in 1.815 seconds (process running for 1561.629)
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.215 s -- in com.mx.cbtis.gestor.controller.UsuarioControllerTest
+[INFO] Running com.mx.cbtis.gestor.controller.TareasControllerTest
+2026-11-05T18:12:23.715Z  INFO 6670 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.mx.cbtis.gestor.controller.TareasControllerTest]: TareasControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-05T18:12:23.750Z  INFO 6670 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.mx.cbtis.gestor.Ejercicio5MyApiGestorApplication for test class com.mx.cbtis.gestor.controller.TareasControllerTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.16)
+
+2026-11-05T18:12:23.847Z  INFO 6670 --- [           main] c.m.c.g.controller.TareasControllerTest  : Starting TareasControllerTest using Java 21.0.13 with PID 6670 (started by jenkins in /var/lib/docker/volumes/jenkins_home/_data/workspace/MicroservicioBack)
+2026-11-05T18:12:23.847Z  INFO 6670 --- [           main] c.m.c.g.controller.TareasControllerTest  : No active profile set, falling back to 1 default profile: "default"
+2026-11-05T18:12:25.882Z  INFO 6670 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-11-05T18:12:25.883Z  INFO 6670 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-11-05T18:12:25.884Z  INFO 6670 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2026-11-05T18:12:25.919Z  INFO 6670 --- [           main] c.m.c.g.controller.TareasControllerTest  : Started TareasControllerTest in 2.159 seconds (process running for 1564.126)
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.719 s -- in com.mx.cbtis.gestor.controller.TareasControllerTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 41, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --- jacoco:0.8.13:report (report) @ Ejercicio5MyAPIGestor ---
+[INFO] Loading execution data file /var/lib/docker/volumes/jenkins_home/_data/workspace/MicroservicioBack/target/jacoco.exec
+[INFO] Analyzed bundle 'Ejercicio5MyAPIGestor' with 16 classes
+[INFO] 
+[INFO] --- jar:3.4.2:jar (default-jar) @ Ejercicio5MyAPIGestor ---
+[INFO] Building jar: /var/lib/docker/volumes/jenkins_home/_data/workspace/MicroservicioBack/target/Ejercicio5MyAPIGestor-0.0.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- spring-boot:3.5.16:repackage (repackage) @ Ejercicio5MyAPIGestor ---
+[INFO] Replacing main artifact /var/lib/docker/volumes/jenkins_home/_data/workspace/MicroservicioBack/target/Ejercicio5MyAPIGestor-0.0.1-SNAPSHOT.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+[INFO] The original artifact has been renamed to /var/lib/docker/volumes/jenkins_home/_data/workspace/MicroservicioBack/target/Ejercicio5MyAPIGestor-0.0.1-SNAPSHOT.jar.original
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  27:07 min
+[INFO] Finished at: 2026-11-05T18:13:13Z
+[INFO] ------------------------------------------------------------------------
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (SonarQube Analysis)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withSonarQubeEnv
+Injecting SonarQube environment variables using the configuration: SonnarServer
+[Pipeline] {
+[Pipeline] sh
++ bash /var/lib/docker/volumes/jenkins_home/_data/tools/hudson.tasks.Maven_MavenInstallation/Maven_3.9.0/bin/mvn org.sonarsource.scanner.maven:sonar-maven-plugin:5.5.0.6356:sonar -Dsonar.projectKey=Ejercicio5MyAPIGestor -Dsonar.projectName=Ejercicio5MyAPIGestor -Dsonar.host.url=http://host.docker.internal:9000 -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -----------------< com.mx.cbtis:Ejercicio5MyAPIGestor >-----------------
+[INFO] Building Ejercicio5MyAPIGestor 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- sonar:5.5.0.6356:sonar (default-cli) @ Ejercicio5MyAPIGestor ---
+[INFO] Java 21.0.13 Eclipse Adoptium (64-bit)
+[INFO] Linux 5.15.153.1-microsoft-standard-WSL2 (amd64)
+[ERROR] Failed to query server version: GET http://host.docker.internal:9000/api/server/version failed with HTTP 404
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  01:14 min
+[INFO] Finished at: 2026-11-05T18:14:50Z
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.sonarsource.scanner.maven:sonar-maven-plugin:5.5.0.6356:sonar (default-cli) on project Ejercicio5MyAPIGestor: The scanner bootstrapping has failed! See the logs for more details. -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
+[Pipeline] }
+WARN: Unable to locate 'report-task.txt' in the workspace. Did the SonarScanner succeed?
+[Pipeline] // withSonarQubeEnv
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Security Scan (SAST) - Semgrep)
+Stage "Security Scan (SAST) - Semgrep" skipped due to earlier failure(s)
+[Pipeline] getContext
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+ERROR: script returned exit code 1
+Finished: FAILURE

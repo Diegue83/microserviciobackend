@@ -1,0 +1,71 @@
++-----------+
+|           |
++-----------+
+| == Tablas |
++-----------+
++--------------------+--------+-------------------+-------+
+| tabla              | motor  | cotejamiento      | filas |
++--------------------+--------+-------------------+-------+
+| asignaciones       | InnoDB | latin1_swedish_ci |     0 |
+| comentarios        | InnoDB | latin1_swedish_ci |     2 |
+| hibernate_sequence | InnoDB | latin1_swedish_ci |     0 |
+| proyectos          | InnoDB | latin1_swedish_ci |     0 |
+| tareas             | InnoDB | latin1_swedish_ci |     0 |
+| usuario            | InnoDB | latin1_swedish_ci |     3 |
++--------------------+--------+-------------------+-------+
++------------------------------+
+|                              |
++------------------------------+
+| == Tablas sin llave primaria |
++------------------------------+
++--------------------+
+| tabla              |
++--------------------+
+| hibernate_sequence |
++--------------------+
++-------------------------------+
+|                               |
++-------------------------------+
+| == Llaves foraneas declaradas |
++-------------------------------+
++-------+
+| total |
++-------+
+|     0 |
++-------+
++--------------------------------------------+
+|                                            |
++--------------------------------------------+
+| == Indices *FK sin restriccion FOREIGN KEY |
++--------------------------------------------+
++--------------+-------------------------+------------+
+| tabla        | indice                  | columna    |
++--------------+-------------------------+------------+
+| asignaciones | asignaciones_usuario_FK | id_usuario |
+| asignaciones | asignaciones_tareas_FK  | id_tarea   |
++--------------+-------------------------+------------+
++---------------------------+
+|                           |
++---------------------------+
+| == Columnas de contrasena |
++---------------------------+
++---------+------------+--------------+
+| tabla   | columna    | tipo         |
++---------+------------+--------------+
+| usuario | contrasena | varchar(100) |
++---------+------------+--------------+
++-------------------------------------------+
+|                                           |
++-------------------------------------------+
+| == Tablas con charset distinto de utf8mb4 |
++-------------------------------------------+
++--------------------+-------------------+
+| tabla              | cotejamiento      |
++--------------------+-------------------+
+| comentarios        | latin1_swedish_ci |
+| proyectos          | latin1_swedish_ci |
+| tareas             | latin1_swedish_ci |
+| hibernate_sequence | latin1_swedish_ci |
+| usuario            | latin1_swedish_ci |
+| asignaciones       | latin1_swedish_ci |
++--------------------+-------------------+

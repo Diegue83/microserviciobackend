@@ -1,0 +1,206 @@
+﻿[INFO] Scanning for projects...
+[INFO] 
+[INFO] -----------------< com.mx.cbtis:Ejercicio5MyAPIGestor >-----------------
+[INFO] Building Ejercicio5MyAPIGestor 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.4.1:clean (default-clean) @ Ejercicio5MyAPIGestor ---
+[INFO] Deleting C:\Users\52418\OneDrive\Documentos\GPDS\Ejercicio5MyAPIGestor\target
+[INFO] 
+[INFO] --- jacoco:0.8.13:prepare-agent (prepare-agent) @ Ejercicio5MyAPIGestor ---
+[INFO] argLine set to -javaagent:C:\\Users\\52418\\.m2\\repository\\org\\jacoco\\org.jacoco.agent\\0.8.13\\org.jacoco.agent-0.8.13-runtime.jar=destfile=C:\\Users\\52418\\OneDrive\\Documentos\\GPDS\\Ejercicio5MyAPIGestor\\target\\jacoco.exec
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ Ejercicio5MyAPIGestor ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 0 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ Ejercicio5MyAPIGestor ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 21 source files with javac [debug parameters release 21] to target\classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ Ejercicio5MyAPIGestor ---
+[INFO] Copying 1 resource from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ Ejercicio5MyAPIGestor ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 9 source files with javac [debug parameters release 21] to target\test-classes
+[INFO] 
+[INFO] --- surefire:3.5.3:test (default-test) @ Ejercicio5MyAPIGestor ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.mx.cbtis.gestor.controller.AsignacionesControllerTest
+11:41:55.350 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.mx.cbtis.gestor.controller.AsignacionesControllerTest]: AsignacionesControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+11:41:56.044 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.mx.cbtis.gestor.Ejercicio5MyApiGestorApplication for test class com.mx.cbtis.gestor.controller.AsignacionesControllerTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.16)
+
+2026-11-05T11:41:57.725-06:00  INFO 13536 --- [           main] c.m.c.g.c.AsignacionesControllerTest     : Starting AsignacionesControllerTest using Java 21.0.12.1 with PID 13536 (started by 52418 in C:\Users\52418\OneDrive\Documentos\GPDS\Ejercicio5MyAPIGestor)
+2026-11-05T11:41:57.728-06:00  INFO 13536 --- [           main] c.m.c.g.c.AsignacionesControllerTest     : No active profile set, falling back to 1 default profile: "default"
+mvnw.cmd : Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because 
+bootstrap classpath has been appended
+En línea: 1 Carácter: 480
++ ... APIGestor"; & .\mvnw.cmd -B clean test "-Dsurefire.useFile=false" *>  ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Java HotSpot(TM...s been appended:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+2026-11-05T11:42:03.129-06:00  INFO 13536 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-11-05T11:42:03.130-06:00  INFO 13536 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-11-05T11:42:03.134-06:00  INFO 13536 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+2026-11-05T11:42:03.214-06:00  INFO 13536 --- [           main] c.m.c.g.c.AsignacionesControllerTest     : Started AsignacionesControllerTest in 6.907 seconds (process running for 11.445)
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.644 s -- in com.mx.cbtis.gestor.controller.AsignacionesControllerTest
+[INFO] Running com.mx.cbtis.gestor.controller.ComentariosControllerTest
+2026-11-05T11:42:04.258-06:00  INFO 13536 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.mx.cbtis.gestor.controller.ComentariosControllerTest]: ComentariosControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-05T11:42:04.376-06:00  INFO 13536 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.mx.cbtis.gestor.Ejercicio5MyApiGestorApplication for test class com.mx.cbtis.gestor.controller.ComentariosControllerTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.16)
+
+2026-11-05T11:42:04.451-06:00  INFO 13536 --- [           main] c.m.c.g.c.ComentariosControllerTest      : Starting ComentariosControllerTest using Java 21.0.12.1 with PID 13536 (started by 52418 in C:\Users\52418\OneDrive\Documentos\GPDS\Ejercicio5MyAPIGestor)
+2026-11-05T11:42:04.455-06:00  INFO 13536 --- [           main] c.m.c.g.c.ComentariosControllerTest      : No active profile set, falling back to 1 default profile: "default"
+2026-11-05T11:42:05.206-06:00  INFO 13536 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-11-05T11:42:05.206-06:00  INFO 13536 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-11-05T11:42:05.207-06:00  INFO 13536 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2026-11-05T11:42:05.242-06:00  INFO 13536 --- [           main] c.m.c.g.c.ComentariosControllerTest      : Started ComentariosControllerTest in 0.858 seconds (process running for 13.473)
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.228 s -- in com.mx.cbtis.gestor.controller.ComentariosControllerTest
+[INFO] Running com.mx.cbtis.gestor.controller.ProyectosControllerTest
+2026-11-05T11:42:05.568-06:00  INFO 13536 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.mx.cbtis.gestor.controller.ProyectosControllerTest]: ProyectosControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-05T11:42:05.594-06:00  INFO 13536 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.mx.cbtis.gestor.Ejercicio5MyApiGestorApplication for test class com.mx.cbtis.gestor.controller.ProyectosControllerTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.16)
+
+2026-11-05T11:42:05.644-06:00  INFO 13536 --- [           main] c.m.c.g.c.ProyectosControllerTest        : Starting ProyectosControllerTest using Java 21.0.12.1 with PID 13536 (started by 52418 in C:\Users\52418\OneDrive\Documentos\GPDS\Ejercicio5MyAPIGestor)
+2026-11-05T11:42:05.644-06:00  INFO 13536 --- [           main] c.m.c.g.c.ProyectosControllerTest        : No active profile set, falling back to 1 default profile: "default"
+2026-11-05T11:42:06.125-06:00  INFO 13536 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-11-05T11:42:06.125-06:00  INFO 13536 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-11-05T11:42:06.127-06:00  INFO 13536 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2026-11-05T11:42:06.146-06:00  INFO 13536 --- [           main] c.m.c.g.c.ProyectosControllerTest        : Started ProyectosControllerTest in 0.548 seconds (process running for 14.377)
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.721 s -- in com.mx.cbtis.gestor.controller.ProyectosControllerTest
+[INFO] Running com.mx.cbtis.gestor.controller.TareasControllerTest
+2026-11-05T11:42:06.310-06:00  INFO 13536 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.mx.cbtis.gestor.controller.TareasControllerTest]: TareasControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-05T11:42:06.374-06:00  INFO 13536 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.mx.cbtis.gestor.Ejercicio5MyApiGestorApplication for test class com.mx.cbtis.gestor.controller.TareasControllerTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.16)
+
+2026-11-05T11:42:06.450-06:00  INFO 13536 --- [           main] c.m.c.g.controller.TareasControllerTest  : Starting TareasControllerTest using Java 21.0.12.1 with PID 13536 (started by 52418 in C:\Users\52418\OneDrive\Documentos\GPDS\Ejercicio5MyAPIGestor)
+2026-11-05T11:42:06.451-06:00  INFO 13536 --- [           main] c.m.c.g.controller.TareasControllerTest  : No active profile set, falling back to 1 default profile: "default"
+2026-11-05T11:42:07.118-06:00  INFO 13536 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-11-05T11:42:07.118-06:00  INFO 13536 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-11-05T11:42:07.122-06:00  INFO 13536 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+2026-11-05T11:42:07.130-06:00  INFO 13536 --- [           main] c.m.c.g.controller.TareasControllerTest  : Started TareasControllerTest in 0.75 seconds (process running for 15.361)
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.953 s -- in com.mx.cbtis.gestor.controller.TareasControllerTest
+[INFO] Running com.mx.cbtis.gestor.controller.UsuarioControllerTest
+2026-11-05T11:42:07.251-06:00  INFO 13536 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.mx.cbtis.gestor.controller.UsuarioControllerTest]: UsuarioControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-05T11:42:07.282-06:00  INFO 13536 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.mx.cbtis.gestor.Ejercicio5MyApiGestorApplication for test class com.mx.cbtis.gestor.controller.UsuarioControllerTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.16)
+
+2026-11-05T11:42:07.341-06:00  INFO 13536 --- [           main] c.m.c.g.c.UsuarioControllerTest          : Starting UsuarioControllerTest using Java 21.0.12.1 with PID 13536 (started by 52418 in C:\Users\52418\OneDrive\Documentos\GPDS\Ejercicio5MyAPIGestor)
+2026-11-05T11:42:07.341-06:00  INFO 13536 --- [           main] c.m.c.g.c.UsuarioControllerTest          : No active profile set, falling back to 1 default profile: "default"
+2026-11-05T11:42:07.976-06:00  INFO 13536 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-11-05T11:42:07.977-06:00  INFO 13536 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-11-05T11:42:07.978-06:00  INFO 13536 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2026-11-05T11:42:07.988-06:00  INFO 13536 --- [           main] c.m.c.g.c.UsuarioControllerTest          : Started UsuarioControllerTest in 0.695 seconds (process running for 16.22)
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.835 s -- in com.mx.cbtis.gestor.controller.UsuarioControllerTest
+[INFO] Running com.mx.cbtis.gestor.controller.ValidacionNulosTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.056 s -- in com.mx.cbtis.gestor.controller.ValidacionNulosTest
+[INFO] Running com.mx.cbtis.gestor.dto.DtoTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.042 s -- in com.mx.cbtis.gestor.dto.DtoTest
+[INFO] Running com.mx.cbtis.gestor.Ejercicio5MyApiGestorApplicationTests
+2026-11-05T11:42:08.209-06:00  INFO 13536 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.mx.cbtis.gestor.Ejercicio5MyApiGestorApplicationTests]: Ejercicio5MyApiGestorApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-05T11:42:08.226-06:00  INFO 13536 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.mx.cbtis.gestor.Ejercicio5MyApiGestorApplication for test class com.mx.cbtis.gestor.Ejercicio5MyApiGestorApplicationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.16)
+
+2026-11-05T11:42:08.263-06:00  INFO 13536 --- [           main] .g.Ejercicio5MyApiGestorApplicationTests : Starting Ejercicio5MyApiGestorApplicationTests using Java 21.0.12.1 with PID 13536 (started by 52418 in C:\Users\52418\OneDrive\Documentos\GPDS\Ejercicio5MyAPIGestor)
+2026-11-05T11:42:08.264-06:00  INFO 13536 --- [           main] .g.Ejercicio5MyApiGestorApplicationTests : No active profile set, falling back to 1 default profile: "default"
+2026-11-05T11:42:08.872-06:00  INFO 13536 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-11-05T11:42:09.000-06:00  INFO 13536 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 103 ms. Found 5 JPA repository interfaces.
+2026-11-05T11:42:09.849-06:00  INFO 13536 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-11-05T11:42:10.109-06:00  INFO 13536 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.53.Final
+2026-11-05T11:42:10.226-06:00  INFO 13536 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-11-05T11:42:10.671-06:00  INFO 13536 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-11-05T11:42:10.744-06:00  INFO 13536 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-05T11:42:11.863-06:00  INFO 13536 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:dbgestor user=SA
+2026-11-05T11:42:11.868-06:00  INFO 13536 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-05T11:42:12.149-06:00  INFO 13536 --- [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-11-05T11:42:12.590-06:00  WARN 13536 --- [           main] org.hibernate.orm.incubating             : HHH90006001: Encountered incubating setting [hibernate.id.db_structure_naming_strategy].  See javadoc on corresponding `org.hibernate.cfg.AvailableSettings` constant for details.
+2026-11-05T11:42:12.605-06:00  WARN 13536 --- [           main] org.hibernate.orm.incubating             : HHH90006001: Encountered incubating setting [hibernate.id.db_structure_naming_strategy].  See javadoc on corresponding `org.hibernate.cfg.AvailableSettings` constant for details.
+2026-11-05T11:42:12.605-06:00  WARN 13536 --- [           main] org.hibernate.orm.incubating             : HHH90006001: Encountered incubating setting [hibernate.id.db_structure_naming_strategy].  See javadoc on corresponding `org.hibernate.cfg.AvailableSettings` constant for details.
+2026-11-05T11:42:12.605-06:00  WARN 13536 --- [           main] org.hibernate.orm.incubating             : HHH90006001: Encountered incubating setting [hibernate.id.db_structure_naming_strategy].  See javadoc on corresponding `org.hibernate.cfg.AvailableSettings` constant for details.
+2026-11-05T11:42:12.606-06:00  WARN 13536 --- [           main] org.hibernate.orm.incubating             : HHH90006001: Encountered incubating setting [hibernate.id.db_structure_naming_strategy].  See javadoc on corresponding `org.hibernate.cfg.AvailableSettings` constant for details.
+2026-11-05T11:42:14.829-06:00  INFO 13536 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-11-05T11:42:14.955-06:00  INFO 13536 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-11-05T11:42:15.592-06:00  INFO 13536 --- [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-11-05T11:42:15.999-06:00  WARN 13536 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-11-05T11:42:16.391-06:00  INFO 13536 --- [           main] .g.Ejercicio5MyApiGestorApplicationTests : Started Ejercicio5MyApiGestorApplicationTests in 8.158 seconds (process running for 24.622)
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.584 s -- in com.mx.cbtis.gestor.Ejercicio5MyApiGestorApplicationTests
+[INFO] Running com.mx.cbtis.gestor.modelo.ModelosTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.012 s -- in com.mx.cbtis.gestor.modelo.ModelosTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 41, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --- jacoco:0.8.13:report (report) @ Ejercicio5MyAPIGestor ---
+[INFO] Loading execution data file C:\Users\52418\OneDrive\Documentos\GPDS\Ejercicio5MyAPIGestor\target\jacoco.exec
+[INFO] Analyzed bundle 'Ejercicio5MyAPIGestor' with 16 classes
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  33.708 s
+[INFO] Finished at: 2026-11-05T11:42:17-06:00
+[INFO] ------------------------------------------------------------------------

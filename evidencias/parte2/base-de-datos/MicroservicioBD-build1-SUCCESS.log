@@ -1,0 +1,214 @@
+﻿Started by user Diego
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/lib/docker/volumes/jenkins_home/_data/workspace/MicroservicioBD
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Checkout)
+[Pipeline] git
+The recommended git tool is: NONE
+No credentials specified
+Cloning the remote Git repository
+Cloning repository https://github.com/Diegue83/microserviciobackend.git
+ > git init /var/lib/docker/volumes/jenkins_home/_data/workspace/MicroservicioBD # timeout=10
+Fetching upstream changes from https://github.com/Diegue83/microserviciobackend.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --tags --force --progress -- https://github.com/Diegue83/microserviciobackend.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url https://github.com/Diegue83/microserviciobackend.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+Avoid second fetch
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 9354efae1409956ec8e85304cd0139e53d15224d (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 9354efae1409956ec8e85304cd0139e53d15224d # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git checkout -b main 9354efae1409956ec8e85304cd0139e53d15224d # timeout=10
+Commit message: "Pruebas unitarias: cobertura JaCoCo 100% de líneas y métodos"
+First time build. Skipping changelog.
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Ver Directorio)
+[Pipeline] sh
++ ls -la db
+total 16
+drwxr-xr-x 2 jenkins jenkins 4096 Nov  5 17:25 .
+drwxr-xr-x 6 jenkins jenkins 4096 Nov  5 17:25 ..
+-rw-r--r-- 1 jenkins jenkins 7042 Nov  5 17:25 dump-dbgestor-202406261453.sql
+[Pipeline] sh
++ docker version --format Docker {{.Server.Version}}
+Docker 27.0.3
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Validar script en MariaDB)
+[Pipeline] sh
++ mkdir -p reportes
++ docker rm -f bd-ci-1
++ docker run -d --name bd-ci-1 -e MARIADB_ROOT_PASSWORD=ci -e MARIADB_DATABASE=dbgestor -v /var/lib/docker/volumes/jenkins_home/_data/workspace/MicroservicioBD/db:/docker-entrypoint-initdb.d:ro mariadb:11.4
+0cbd6b5de3adac0eecd66189293cf22f6bd8e0e4eb17fbd7e74b486a305d5cfc
++ seq 1 60
++ docker logs bd-ci-1
++ grep -q init process done
++ sleep 3
++ docker logs bd-ci-1
++ grep -q init process done
++ sleep 3
++ grep -q init process done
++ docker logs bd-ci-1
++ sleep 3
++ docker logs bd-ci-1
++ grep -q init process done
++ docker exec bd-ci-1 healthcheck.sh --connect --innodb_initialized
++ break
++ docker exec bd-ci-1 mariadb -uroot -pci -N -e SELECT COUNT(*) FROM information_schema.tables WHERE table_schema='dbgestor'
++ TABLAS=6
++ echo Tablas creadas: 6
+Tablas creadas: 6
++ [ 6 != 6 ]
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Análisis del esquema)
+[Pipeline] sh
++ docker exec bd-ci-1 sh -c mariadb-dump -uroot -pci --no-data --compact --skip-comments dbgestor | grep -vE '^/[*](!|M!)'
++ docker exec -i bd-ci-1 mariadb -uroot -pci -t dbgestor
++ cat reportes/analisis-esquema.txt
++-----------+
+|           |
++-----------+
+| == Tablas |
++-----------+
++--------------------+--------+-------------------+-------+
+| tabla              | motor  | cotejamiento      | filas |
++--------------------+--------+-------------------+-------+
+| asignaciones       | InnoDB | latin1_swedish_ci |     0 |
+| comentarios        | InnoDB | latin1_swedish_ci |     2 |
+| hibernate_sequence | InnoDB | latin1_swedish_ci |     0 |
+| proyectos          | InnoDB | latin1_swedish_ci |     0 |
+| tareas             | InnoDB | latin1_swedish_ci |     0 |
+| usuario            | InnoDB | latin1_swedish_ci |     3 |
++--------------------+--------+-------------------+-------+
++------------------------------+
+|                              |
++------------------------------+
+| == Tablas sin llave primaria |
++------------------------------+
++--------------------+
+| tabla              |
++--------------------+
+| hibernate_sequence |
++--------------------+
++-------------------------------+
+|                               |
++-------------------------------+
+| == Llaves foraneas declaradas |
++-------------------------------+
++-------+
+| total |
++-------+
+|     0 |
++-------+
++--------------------------------------------+
+|                                            |
++--------------------------------------------+
+| == Indices *FK sin restriccion FOREIGN KEY |
++--------------------------------------------+
++--------------+-------------------------+------------+
+| tabla        | indice                  | columna    |
++--------------+-------------------------+------------+
+| asignaciones | asignaciones_usuario_FK | id_usuario |
+| asignaciones | asignaciones_tareas_FK  | id_tarea   |
++--------------+-------------------------+------------+
++---------------------------+
+|                           |
++---------------------------+
+| == Columnas de contrasena |
++---------------------------+
++---------+------------+--------------+
+| tabla   | columna    | tipo         |
++---------+------------+--------------+
+| usuario | contrasena | varchar(100) |
++---------+------------+--------------+
++-------------------------------------------+
+|                                           |
++-------------------------------------------+
+| == Tablas con charset distinto de utf8mb4 |
++-------------------------------------------+
++--------------------+-------------------+
+| tabla              | cotejamiento      |
++--------------------+-------------------+
+| comentarios        | latin1_swedish_ci |
+| proyectos          | latin1_swedish_ci |
+| tareas             | latin1_swedish_ci |
+| hibernate_sequence | latin1_swedish_ci |
+| usuario            | latin1_swedish_ci |
+| asignaciones       | latin1_swedish_ci |
++--------------------+-------------------+
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Calidad SQL - SQLFluff)
+[Pipeline] sh
++ docker run --rm -v /var/lib/docker/volumes/jenkins_home/_data/workspace/MicroservicioBD:/src -w /src sqlfluff/sqlfluff:3.4.2 lint reportes/esquema.sql --dialect mariadb --format json
++ true
++ docker run --rm -v /var/lib/docker/volumes/jenkins_home/_data/workspace/MicroservicioBD:/src -w /src sqlfluff/sqlfluff:3.4.2 lint reportes/esquema.sql --dialect mariadb
++ true
++ tail -5 reportes/sqlfluff.txt
+L:  49 | P:  66 | LT01 | Expected single whitespace between parameter and raw
+                       | comparison operator '='. [layout.spacing]
+L:  49 | P:  67 | LT01 | Expected single whitespace between raw comparison
+                       | operator '=' and parameter. [layout.spacing]
+All Finished!
++ grep -q "code": "PRS" reportes/sqlfluff.json
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Security Scan (SAST) - Semgrep)
+[Pipeline] sh
++ docker run --rm --network bridge -v /var/lib/docker/volumes/jenkins_home/_data/workspace/MicroservicioBD:/src -w /src semgrep/semgrep semgrep scan --config=auto --json --output=reportes/semgrep.json db
+               
+               
+┌─────────────┐
+│ Scan Status │
+└─────────────┘
+  Scanning 1 file tracked by git with 1074 Code rules:
+  Scanning 1 file with 47 <multilang> rules.
+                
+                
+┌──────────────┐
+│ Scan Summary │
+└──────────────┘
+✅ Scan completed successfully.
+ • Findings: 0 (0 blocking)
+ • Rules run: 47
+ • Targets scanned: 1
+ • Parsed lines: ~100.0%
+ • Scan was limited to files tracked by git
+ • For a detailed list of skipped files and lines, run semgrep with the --verbose flag
+Ran 47 rules on 1 file: 0 findings.
+(need more rules? `semgrep login` for additional free Semgrep Registry rules)
+
+If Semgrep missed a finding, please send us feedback to let us know!
+See https://semgrep.dev/docs/reporting-false-negatives/
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] sh
++ docker rm -f bd-ci-1
+bd-ci-1
+[Pipeline] archiveArtifacts
+Archiving artifacts
+Recording fingerprints
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS

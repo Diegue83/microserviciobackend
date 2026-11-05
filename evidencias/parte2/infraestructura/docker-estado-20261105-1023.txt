@@ -1,0 +1,21 @@
+﻿== docker version
+Client 27.0.3 / Server 27.0.3 (linux)
+
+== docker ps
+NAMES       IMAGE                  STATUS          PORTS
+sonarqube   sonarqube:community    Up 10 hours     0.0.0.0:9000->9000/tcp
+jenkins     jenkins-jdk21-docker   Up 31 minutes   0.0.0.0:50000->50000/tcp, 0.0.0.0:8090->8080/tcp
+
+== docker images
+REPOSITORY:TAG                SIZE
+jenkins-jdk21-docker:latest   585MB
+sonarqube:community           1.44GB
+semgrep/semgrep:latest        1.13GB
+
+== docker volume ls
+79e400bc473938413e60e77624ad655ab0fa64b295f765d5ffdee4f92d40311e
+44940f3d55a0b158e749d629fa59acf25584a72f794178cb71154db81ffe5985
+infra-ci_sonarqube_data
+infra-ci_sonarqube_extensions
+infra-ci_sonarqube_logs
+jenkins_home

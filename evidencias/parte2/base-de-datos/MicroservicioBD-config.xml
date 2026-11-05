@@ -1,0 +1,168 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-definition plugin="workflow-job@1622.vc41c189cb_e5f">
+  <actions>
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@2.2293.v6e7193cec599"/>
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@2.2293.v6e7193cec599">
+      <jobProperties/>
+      <triggers/>
+      <parameters/>
+      <options/>
+    </org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction>
+  </actions>
+  <description>Pipeline de la base de datos (dbgestor, script db/ del repo microserviciobackend): validación en MariaDB, análisis del esquema, calidad SQL (SQLFluff) y seguridad (Semgrep)</description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.47.0">
+      <projectUrl>https://github.com/Diegue83/microserviciobackend/</projectUrl>
+      <displayName>microserviciobackend (db/)</displayName>
+    </com.coravy.hudson.plugins.github.GithubProjectProperty>
+  </properties>
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@4403.v471713a_cea_19">
+    <script>pipeline {
+    agent any
+    environment {
+        // Contenedor temporal de MariaDB, uno por ejecución
+        BD_CONTENEDOR = &quot;bd-ci-${BUILD_NUMBER}&quot;
+        BD_NOMBRE = &apos;dbgestor&apos;
+    }
+    stages {
+        stage(&apos;Checkout&apos;) {
+            steps {
+                // Descarga el código del repositorio (el script de la BD está en db/)
+                git branch: &apos;main&apos;, url: &apos;https://github.com/Diegue83/microserviciobackend.git&apos;
+            }
+        }
+        stage(&apos;Ver Directorio&apos;) {
+            steps {
+                sh &apos;ls -la db&apos;
+                sh &apos;docker version --format &quot;Docker {{.Server.Version}}&quot;&apos;
+            }
+        }
+        stage(&apos;Validar script en MariaDB&apos;) {
+            steps {
+                sh &apos;&apos;&apos;
+                    mkdir -p reportes
+                    docker rm -f &quot;$BD_CONTENEDOR&quot; 2&gt;/dev/null || true
+
+                    docker run -d --name &quot;$BD_CONTENEDOR&quot; \
+                      -e MARIADB_ROOT_PASSWORD=ci \
+                      -e MARIADB_DATABASE=&quot;$BD_NOMBRE&quot; \
+                      -v &quot;${WORKSPACE}/db&quot;:/docker-entrypoint-initdb.d:ro \
+                      mariadb:11.4
+
+                    # Espera a que termine de cargar el script y arranque el servidor final
+                    for i in $(seq 1 60); do
+                      if docker logs &quot;$BD_CONTENEDOR&quot; 2&gt;&amp;1 | grep -q &quot;init process done&quot; \
+                         &amp;&amp; docker exec &quot;$BD_CONTENEDOR&quot; healthcheck.sh --connect --innodb_initialized &gt;/dev/null 2&gt;&amp;1; then
+                        break
+                      fi
+                      sleep 3
+                    done
+
+                    TABLAS=$(docker exec &quot;$BD_CONTENEDOR&quot; mariadb -uroot -pci -N -e \
+                      &quot;SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=&apos;$BD_NOMBRE&apos;&quot;)
+                    echo &quot;Tablas creadas: $TABLAS&quot;
+                    if [ &quot;$TABLAS&quot; != &quot;6&quot; ]; then
+                      docker logs &quot;$BD_CONTENEDOR&quot; &gt; reportes/mariadb.log 2&gt;&amp;1
+                      echo &quot;ERROR: se esperaban 6 tablas&quot;
+                      exit 1
+                    fi
+                &apos;&apos;&apos;
+            }
+        }
+        stage(&apos;Análisis del esquema&apos;) {
+            steps {
+                sh &apos;&apos;&apos;
+                    # Esquema limpio (sin datos ni comentarios propios de mysqldump) para el análisis estático
+                    docker exec &quot;$BD_CONTENEDOR&quot; sh -c \
+                      &quot;mariadb-dump -uroot -pci --no-data --compact --skip-comments $BD_NOMBRE | grep -vE &apos;^/[*](!|M!)&apos;&quot; \
+                      &gt; reportes/esquema.sql
+
+                    docker exec -i &quot;$BD_CONTENEDOR&quot; mariadb -uroot -pci -t &quot;$BD_NOMBRE&quot; &gt; reportes/analisis-esquema.txt &lt;&lt;&apos;SQL&apos;
+SELECT &apos;== Tablas&apos; AS &apos;&apos;;
+SELECT table_name AS tabla, engine AS motor, table_collation AS cotejamiento, table_rows AS filas
+  FROM information_schema.tables WHERE table_schema = DATABASE() ORDER BY 1;
+SELECT &apos;== Tablas sin llave primaria&apos; AS &apos;&apos;;
+SELECT t.table_name AS tabla
+  FROM information_schema.tables t
+  LEFT JOIN information_schema.table_constraints c
+    ON c.table_schema = t.table_schema AND c.table_name = t.table_name AND c.constraint_type = &apos;PRIMARY KEY&apos;
+ WHERE t.table_schema = DATABASE() AND c.constraint_name IS NULL;
+SELECT &apos;== Llaves foraneas declaradas&apos; AS &apos;&apos;;
+SELECT COUNT(*) AS total FROM information_schema.referential_constraints WHERE constraint_schema = DATABASE();
+SELECT &apos;== Indices *FK sin restriccion FOREIGN KEY&apos; AS &apos;&apos;;
+SELECT DISTINCT s.table_name AS tabla, s.index_name AS indice, s.column_name AS columna
+  FROM information_schema.statistics s
+  LEFT JOIN information_schema.key_column_usage k
+    ON k.table_schema = s.table_schema AND k.table_name = s.table_name
+   AND k.column_name = s.column_name AND k.referenced_table_name IS NOT NULL
+ WHERE s.table_schema = DATABASE() AND s.index_name LIKE &apos;%FK&apos; AND k.constraint_name IS NULL;
+SELECT &apos;== Columnas de contrasena&apos; AS &apos;&apos;;
+SELECT table_name AS tabla, column_name AS columna, column_type AS tipo
+  FROM information_schema.columns WHERE table_schema = DATABASE() AND column_name REGEXP &apos;contra|pass&apos;;
+SELECT &apos;== Tablas con charset distinto de utf8mb4&apos; AS &apos;&apos;;
+SELECT table_name AS tabla, table_collation AS cotejamiento
+  FROM information_schema.tables WHERE table_schema = DATABASE() AND table_collation NOT LIKE &apos;utf8mb4%&apos;;
+SQL
+                    cat reportes/analisis-esquema.txt
+                &apos;&apos;&apos;
+            }
+        }
+        stage(&apos;Calidad SQL - SQLFluff&apos;) {
+            steps {
+                sh &apos;&apos;&apos;
+                    docker run --rm \
+                      -v &quot;${WORKSPACE}&quot;:/src \
+                      -w /src \
+                      sqlfluff/sqlfluff:3.4.2 \
+                      lint reportes/esquema.sql --dialect mariadb --format json \
+                      &gt; reportes/sqlfluff.json || true
+
+                    docker run --rm \
+                      -v &quot;${WORKSPACE}&quot;:/src \
+                      -w /src \
+                      sqlfluff/sqlfluff:3.4.2 \
+                      lint reportes/esquema.sql --dialect mariadb \
+                      &gt; reportes/sqlfluff.txt || true
+                    tail -5 reportes/sqlfluff.txt
+
+                    # Los avisos de estilo no detienen el pipeline; un esquema que no se puede analizar sí
+                    if grep -q &apos;&quot;code&quot;: &quot;PRS&quot;&apos; reportes/sqlfluff.json; then
+                      echo &quot;ERROR: SQLFluff no pudo analizar el esquema&quot;
+                      exit 1
+                    fi
+                &apos;&apos;&apos;
+            }
+        }
+        stage(&apos;Security Scan (SAST) - Semgrep&apos;) {
+            steps {
+                sh &apos;&apos;&apos;
+                    docker run --rm \
+                      --network bridge \
+                      -v &quot;${WORKSPACE}&quot;:/src \
+                      -w /src \
+                      semgrep/semgrep \
+                      semgrep scan \
+                        --config=auto \
+                        --json \
+                        --output=reportes/semgrep.json \
+                        db
+                &apos;&apos;&apos;
+            }
+        }
+    }
+    post {
+        always {
+            sh &apos;docker rm -f &quot;$BD_CONTENEDOR&quot; 2&gt;/dev/null || true&apos;
+            archiveArtifacts artifacts: &apos;reportes/*&apos;,
+                allowEmptyArchive: true,
+                fingerprint: true
+        }
+    }
+}
+</script>
+    <sandbox>true</sandbox>
+  </definition>
+  <triggers/>
+  <disabled>false</disabled>
+</flow-definition>

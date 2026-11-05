@@ -1,0 +1,43 @@
+services:
+  jenkins:
+    build: ./jenkins
+    image: jenkins-jdk21-docker
+    container_name: jenkins
+    # El 8080 lo ocupa el Jenkins instalado en Windows
+    ports:
+      - "8090:8080"
+      - "50000:50000"
+    environment:
+      # JENKINS_HOME usa la misma ruta que el volumen tiene en el host de Docker, así
+      # "docker run -v ${WORKSPACE}:/src" (etapa Semgrep) monta el código real y no una carpeta vacía
+      - JENKINS_HOME=/var/lib/docker/volumes/jenkins_home/_data
+    volumes:
+      - jenkins_home:/var/lib/docker/volumes/jenkins_home/_data
+      - /var/run/docker.sock:/var/run/docker.sock
+    # docker.sock en Docker Desktop es root:root 660; el usuario jenkins necesita el grupo 0 para usarlo (Semgrep)
+    group_add:
+      - "0"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+
+  sonarqube:
+    image: sonarqube:community
+    container_name: sonarqube
+    ports:
+      - "9000:9000"
+    environment:
+      - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+      - sonarqube_logs:/opt/sonarqube/logs
+    restart: unless-stopped
+
+volumes:
+  jenkins_home:
+    # Nombre fijo: la ruta en el host debe coincidir con JENKINS_HOME
+    name: jenkins_home
+  sonarqube_data:
+  sonarqube_extensions:
+  sonarqube_logs:
